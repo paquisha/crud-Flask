@@ -1,0 +1,58 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}{{ 'Editar' if contact else 'Agregar' }} Contacto{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header {{ 'bg-warning' if contact else 'bg-primary' }} text-white">
+                <h4 class="mb-0">
+                    <i class="bi {{ 'bi-pencil' if contact else 'bi-person-plus' }}"></i>
+                    {{ 'Editar' if contact else 'Agregar' }} Contacto
+                </h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('contact.edit', contact_id=contact.id) if contact else url_for('contact.add') }}">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre *</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" 
+                               value="{{ contact.nombre if contact else '' }}" required>
+                        <div class="form-text">Campo obligatorio</div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="correo" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="correo" name="correo" 
+                                   value="{{ contact.correo if contact else '' }}">
+                            <div class="form-text">Formato: usuario@dominio.com</div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="telefono" class="form-label">Teléfono</label>
+                            <input type="text" class="form-control" id="telefono" name="telefono" 
+                                   value="{{ contact.telefono if contact else '' }}">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="detalle" class="form-label">Detalles</label>
+                        <textarea class="form-control" id="detalle" name="detalle" rows="3">{{ contact.detalle if contact else '' }}</textarea>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ url_for('contact.list') }}" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> Cancelar
+                        </a>
+                        <button type="submit" class="btn {{ 'btn-warning' if contact else 'btn-primary' }}">
+                            <i class="bi {{ 'bi-check-circle' if contact else 'bi-plus-circle' }}"></i>
+                            {{ 'Actualizar' if contact else 'Guardar' }} Contacto
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
